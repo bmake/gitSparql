@@ -1,6 +1,8 @@
 # gitSparql
 
-Update data in SPARQL-Endpoint with Webhook 
+Update data in SPARQL-Endpoint with Webhook.
+
+config.php is automatically generated at first start. It contains the automatic generated secret. 
 
 ## Parameters
 - secret: Secret as configured in application

@@ -11,3 +11,12 @@ Update data in SPARQL-Endpoint with Webhook
 ```
 webhook.php?secret=XYZSDF&endpoint=http://fuseki/dataset/data?default&data[]=FILE1&data[]=FILE2
 ```
+
+
+## Misc
+
+Remember to check permissions 
+
+```
+sudo chown www-data:www-data -R gitSparql/
+```

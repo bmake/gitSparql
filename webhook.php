@@ -3,12 +3,35 @@
 require_once ('vendor/autoload.php');
 require_once ('SparqlHttpGraph.php');
 
-$secret = 'SECRET'; //pls change
+if(!file_exists('config.php')){
+
+    require_once ('RandomStringGenerator.php');
+
+    // Create new instance of generator class.
+    $generator = new RandomStringGenerator;
+    // Set token length.
+    $tokenLength = 32;
+    // Call method to generate random string.
+    $token = $generator->generate($tokenLength);
+
+    $config = '
+    <?php
+    $config = array ("secret" => "'.$token.'");
+    ';
+
+    file_put_contents('config.php', $config);
+}
+
+if(file_exists('config.php')){
+    require_once ('config.php');
+}
+
+$branch = 'refs/heads/master';
 
 $payload = file_get_contents('php://input');
 $payload = json_decode($payload);
 
-if ( isset($_GET['secret']) && $secret == $_GET['secret'] && isset($payload)) {
+if ( isset($_GET['secret']) && $config['secret'] == $_GET['secret'] && isset($payload) && $payload->ref == $branch) {
 
     if(isset($_GET['endpoint']) && isset($_GET['data'])){
 
@@ -16,7 +39,6 @@ if ( isset($_GET['secret']) && $secret == $_GET['secret'] && isset($payload)) {
         $data = $_GET['data'];
         $log['time'] = time();
         $log['commits'] = json_decode(json_encode($data->commits), true);
-
 
         $SparqlHttpGraph = new SparqlHTTPGraph($endpoint);
 

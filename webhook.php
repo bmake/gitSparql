@@ -1,11 +1,11 @@
 <?php
 
 require_once ('vendor/autoload.php');
-require_once ('SparqlHttpGraph.php');
+require_once ('class/SparqlHttpGraph.php');
 
 if(!file_exists('config.php')){
 
-    require_once ('RandomStringGenerator.php');
+    require_once ('class/RandomStringGenerator.php');
 
     // Create new instance of generator class.
     $generator = new RandomStringGenerator;

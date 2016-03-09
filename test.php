@@ -25,27 +25,22 @@ if(!file_exists('config.php')){
 if(file_exists('config.php')){
     require_once ('config.php');
 }
+echo '<pre>';
 
-$branch = 'refs/heads/master';
 
-$payload = file_get_contents('php://input');
-$payload = json_decode($payload);
-
-if ( isset($_GET['secret']) && $config['secret'] == $_GET['secret'] && isset($payload) && $payload->ref == $branch) {
+if ( isset($_GET['secret']) && $config['secret'] == $_GET['secret']) {
 
     if(isset($_GET['endpoint']) && isset($_GET['data'])){
 
         $endpoint = $_GET['endpoint'];
         $data = $_GET['data'];
-        $log['time'] = time();
-        $log['commits'] = json_decode(json_encode($data->commits), true);
 
-        $SparqlHttpGraph = new SparqlHTTPGraph($endpoint);
+        $SparqlHttpGraph = new SparqlHTTPGraph($endpoint, true);
 
         if(is_array($data) == true){
             $i = false;
             foreach ($data as $item) {
-                // First POST than PUT
+                // First PUT than POST
                 if($i == false) {
                     $response = $SparqlHttpGraph->request($item, 'PUT');
                     $i = true;
@@ -66,7 +61,6 @@ if ( isset($_GET['secret']) && $config['secret'] == $_GET['secret'] && isset($pa
         }
 
         print_r(json_encode($log));
-        file_put_contents('webhook.log', json_encode($log)."\n", FILE_APPEND);
     }
 
 }

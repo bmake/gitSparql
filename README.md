@@ -1,7 +1,6 @@
 # gitSparql
 
-Update data in SPARQL-Endpoint with Webhook.
-
+Update data in SPARQL-Endpoint based on data storded in a github repository.
 
 ## How to use
 

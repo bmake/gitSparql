@@ -1,6 +1,6 @@
 # gitSparql
 
-Update data in SPARQL-Endpoint based on data storded in a github repository.
+Update data in a Triple store based on data stored in a github repository.
 
 ## How to use
 
